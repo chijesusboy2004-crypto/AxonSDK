@@ -13,14 +13,13 @@ public:
     ~AxonSDK();
 
     // Initialization
-    void begin(const char* deviceToken, const char* deviceSecret, Client* customClient = nullptr);
+    void begin(const char* authToken, const char* ssid, const char* password);
+    void beginWithClient(const char* deviceToken, const char* deviceSecret, Client* customClient);
     
     // Blynk-style macro begin wrapper
     void begin(const char* ssid, const char* password) {
 #ifdef AXON_AUTH_TOKEN
-        begin(AXON_AUTH_TOKEN, "", nullptr);
-        connectWiFi(ssid, password);
-        connect();
+        begin(AXON_AUTH_TOKEN, ssid, password);
 #endif
     }
 

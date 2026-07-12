@@ -23,7 +23,20 @@ AxonSDK::~AxonSDK() {
     // Destructor
 }
 
-void AxonSDK::begin(const char* deviceToken, const char* deviceSecret, Client* customClient) {
+void AxonSDK::begin(const char* authToken, const char* ssid, const char* password) {
+    _deviceToken = authToken;
+    _deviceSecret = "";
+    
+    _mqttClient.begin(_deviceToken, _deviceSecret);
+    _mqttClient.setCallback(axonMqttCallback);
+    
+    connectWiFi(ssid, password);
+    connect();
+    
+    AxonLogger::info("SDK Initialized.");
+}
+
+void AxonSDK::beginWithClient(const char* deviceToken, const char* deviceSecret, Client* customClient) {
     _deviceToken = deviceToken;
     _deviceSecret = deviceSecret;
     
@@ -33,7 +46,7 @@ void AxonSDK::begin(const char* deviceToken, const char* deviceSecret, Client* c
     _mqttClient.begin(_deviceToken, _deviceSecret);
     _mqttClient.setCallback(axonMqttCallback);
     
-    AxonLogger::info("SDK Initialized.");
+    AxonLogger::info("SDK Initialized with custom client.");
 }
 
 void AxonSDK::setWriteHandler(const char* vpin, AxonWriteHandler handler) {
