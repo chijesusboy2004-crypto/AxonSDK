@@ -36,7 +36,7 @@ private:
     unsigned long _lastReconnectAttempt;
 
     // Hardcoded to Fly.io broker for now, could be dynamic later
-    const char* _brokerHost = "axon-chijesus-gateway-bold-dust-4292.fly.dev";
+    const char* _brokerHost = "66.241.124.231";
     const int _brokerPort = 1883; 
 };
 
